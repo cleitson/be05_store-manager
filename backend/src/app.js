@@ -2,6 +2,7 @@ const express = require('express');
 require('express-async-errors');
 
 const productRoute = require('./routes/productRoute');
+const salesRoute = require('./routes/salesRoute');
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/products', productRoute);
+app.use('/sales', salesRoute);
 
 app.use((error, _req, res, _next) => res.status(500).json({ error: error.message }));
 
