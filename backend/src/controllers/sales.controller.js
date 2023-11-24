@@ -12,7 +12,14 @@ const requestSaleById = async (req, res) => {
   return res.status(httpStatus(status)).json(data);
 };
 
+const requestNewSale = async (req, res) => {
+  const { body } = req;
+  const { data, status } = await salesService.newSale(body);
+  return res.status(httpStatus(status)).json(data);
+};
+
 module.exports = {
   requestAllSales,
   requestSaleById,
+  requestNewSale,
 };
