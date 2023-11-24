@@ -11,7 +11,16 @@ const findProductById = async (id) => {
   return { status: 'SUCCESSFUL', data: productById };
 };
 
+const insertNewProduct = async (name) => {
+  if (!name || typeof name !== 'string') {
+    return { status: 'INVALID_VALUE', data: { message: '"name" is required' } };
+  }
+  const id = await productModel.insertNewProduct(name);
+  const product = await productModel.findById(id);
+  return { status: 'CREATED', data: product };
+};
 module.exports = {
   listAllProducts,
   findProductById,
+  insertNewProduct,
 };

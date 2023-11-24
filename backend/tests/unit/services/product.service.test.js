@@ -5,7 +5,7 @@ const productModel = require('../../../src/models/products.model');
 
 describe('Testando o service de produtos', function () {
   afterEach(function () { sinon.restore(); });
-  it('retorna todos os produtos', async function () {
+  it('Testa se listAllProducts retorna todos os produtos', async function () {
     const dbProducts = [{
       id: 1,
       name: 'Martelo de Thor',
@@ -24,7 +24,7 @@ describe('Testando o service de produtos', function () {
     expect(status).to.be.equal('SUCCESSFUL');
     expect(data).to.be.deep.equal(dbProducts);
   });
-  it('retorna um produto pelo id', async function () {
+  it('Testa se findProductById retorna um produto pelo id', async function () {
     const dbProduct = {
       id: 1,
       name: 'Martelo de Thor',
@@ -41,5 +41,17 @@ describe('Testando o service de produtos', function () {
 
     expect(status).to.be.equal('NOT_FOUND');
     expect(data).to.be.deep.equal({ message: 'Product not found' });
+  });
+  it('Testa se insertNewProduct insere um produto', async function () {
+    sinon.stub(productModel, 'insertNewProduct').resolves([{ insertId: 1 }]);
+    const dbProduct = {
+      id: 1,
+      name: 'Traje Homen de ferro',
+    };
+    sinon.stub(productModel, 'findById').resolves(dbProduct);
+    const { status, data } = await productsService.insertNewProduct('Traje Homen de ferro');
+
+    expect(status).to.be.equal('CREATED');
+    expect(data).to.be.deep.equal(dbProduct);
   });
 });
