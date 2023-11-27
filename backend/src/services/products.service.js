@@ -12,15 +12,22 @@ const findProductById = async (id) => {
 };
 
 const insertNewProduct = async (name) => {
-  if (!name || typeof name !== 'string') {
-    return { status: 'INVALID_VALUE', data: { message: '"name" is required' } };
-  }
   const id = await productModel.insertNewProduct(name);
   const product = await productModel.findById(id);
   return { status: 'CREATED', data: product };
+};
+
+const updateProduct = async (id, name) => {
+  const affectedRows = await productModel.updateProduct(id, name);
+  if (affectedRows !== 1) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+  }
+  const product = await productModel.findById(id);
+  return { status: 'SUCCESSFUL', data: product };
 };
 module.exports = {
   listAllProducts,
   findProductById,
   insertNewProduct,
+  updateProduct,
 };
