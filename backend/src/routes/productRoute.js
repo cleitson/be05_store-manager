@@ -10,4 +10,6 @@ productRoute.post('/', validateNewProduct, productsController.requestNewProduct)
 
 productRoute.put('/:id', validateNewProduct, productsController.requestUpdateProduct);
 
+productRoute.delete('/:id', productsController.requestDeleteProduct);
+
 module.exports = productRoute;
